@@ -33,7 +33,7 @@
             <Picker VerticalOptions="Center" ItemsSource="{Binding SecteurAct}" SelectedItem="{Binding SelectedSecteurAct}"/>
         </Border>
 
-        <Border BackgroundColor="Orange" Padding="0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="5">
+        <Border BackgroundColor="Orange" Padding="0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="5" >
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="20"/>
             </Border.StrokeShape>
@@ -56,15 +56,13 @@
 
                      IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
 
-                        <ListView x:Name="OffreProListView"
-          ItemsSource="{Binding ObsItems}" 
-          IsPullToRefreshEnabled="True" 
-          RefreshCommand="{Binding LoadItems}" 
-          Margin="0,20">
+                        <CollectionView ItemsSource="{Binding ObsItems}" Grid.Column="2"
+                                        SelectionMode="Single" SelectedItem="{Binding SelectedItem}"
+                        SelectionChangedCommand="{Binding EventSelectedCommand}">
 
-                            <ListView.ItemTemplate>
+                            <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <ViewCell>
+                                    
                                         <Frame Margin="0,0,0,10" Padding="10" HasShadow="False" BorderColor="LightGray" CornerRadius="5">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -142,23 +140,18 @@
                                LineBreakMode="NoWrap" 
                                Style="{DynamicResource ListItemDetailTextStyle}"
                                FontSize="13" Grid.Column="2" Grid.Row="4" HorizontalOptions="End"/>
-                                                <!--<Grid.GestureRecognizers>
-                                                    <TapGestureRecognizer 
-                                                NumberOfTapsRequired="1"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ItemViewModel}}, Path=ItemTappedCommand}"
-                                                CommandParameter="{Binding .}">
-                                                    </TapGestureRecognizer>
-                                                </Grid.GestureRecognizers>-->
+                                                
                                             </Grid>
                                         </Frame>
-                                    </ViewCell>
+                                    
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
+                                </CollectionView.ItemTemplate>
 
-                        </ListView>
+                        </CollectionView>
 
                     </RefreshView>
                 </Grid>
+                
             </Grid>
         </Border>
     </Grid>

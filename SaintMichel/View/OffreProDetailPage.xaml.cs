@@ -1,9 +1,15 @@
-namespace SaintMichel.View;
+//using AndroidX.Lifecycle;
+//using static Android.App.Assist.AssistStructure;
+using SaintMichel.ViewModel;
 
-public partial class OffreProDetailPage : ContentPage
+namespace SaintMichel.View
 {
-	public OffreProDetailPage()
-	{
-		InitializeComponent();
-	}
+    public partial class OffreProDetailPage : ContentPage
+    {
+        public OffreProDetailPage(OffreProDetailPageViewModel viewModel)
+        {
+            InitializeComponent();
+            BindingContext = viewModel;
+        }
+    }
 }

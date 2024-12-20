@@ -3,10 +3,109 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SaintMichel.View.OffreProDetailPage"
              Title="OffreProDetailPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        <Frame Grid.Row="1" Grid.Column="1" Padding="20" BackgroundColor="Orange" CornerRadius="20">
+            <StackLayout Spacing="15">
+                <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                    <ListView x:Name="OffreProListView"
+                              ItemsSource="{Binding ObsItems}"
+                              IsPullToRefreshEnabled="True"
+                              RefreshCommand="{Binding LoadItems}">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Spacing="15">
+
+                                        <!-- Cadre pour le Nom de l'entreprise -->
+                                        <Frame BackgroundColor="LightGray" CornerRadius="10" Padding="10">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Nom de l'entreprise :" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                                <Label Text="{Binding NameEntreprise}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                            </StackLayout>
+                                        </Frame>
+
+                                        <!-- Cadre pour la Ville -->
+                                        <Frame BackgroundColor="LightGray" CornerRadius="10" Padding="10">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Ville :" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                                <Label Text="{Binding NameVille}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                            </StackLayout>
+                                        </Frame>
+
+                                        <!-- Cadre pour la Description de l'emploi -->
+                                        <Frame BackgroundColor="LightGray" CornerRadius="10" Padding="10">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Description de l'emploi :" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                                <Label Text="{Binding Tache}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                            </StackLayout>
+                                        </Frame>
+
+                                        <!-- Cadre pour Dates de début et de fin -->
+                                        <Grid Padding="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Frame BackgroundColor="LightGray" CornerRadius="10" Padding="10">
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Date de début :" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                                    <Label Text="{Binding DateStart}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                                </StackLayout>
+                                            </Frame>
+                                            <Frame BackgroundColor="LightGray" CornerRadius="10" Padding="10" Grid.Row="1">
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Date de fin :" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                                    <Label Text="{Binding DateEnd}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                                </StackLayout>
+                                            </Frame>
+                                        </Grid>
+
+                                        <!-- Cadre pour Type d'offre et Secteur d'activité -->
+                                        <Grid Padding="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Frame BackgroundColor="LightGray" CornerRadius="10" Padding="10">
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Type d'offre :" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                                    <Label Text="{Binding TypeOffre}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                                </StackLayout>
+                                            </Frame>
+                                            <Frame BackgroundColor="LightGray" CornerRadius="10" Padding="10" Grid.Row="1">
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Secteur d'activité :" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                                    <Label Text="{Binding SecteurActivite}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                                </StackLayout>
+                                            </Frame>
+                                        </Grid>
+
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+                </RefreshView>
+            </StackLayout>
+        </Frame>
+    </Grid>
 </ContentPage>

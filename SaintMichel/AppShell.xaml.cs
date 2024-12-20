@@ -13,6 +13,7 @@
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute("OffreProPage", typeof(OffreProPage));
             Routing.RegisterRoute(nameof(EventPage), typeof(EventPage)); 
+            Routing.RegisterRoute("OffreProDetailPage", typeof(OffreProDetailPage));
 
         }
     }

@@ -8,6 +8,9 @@ namespace SaintMichel.ViewModel
 {
     public partial class OffreProPageViewModel : BaseViewModel
     {
+        [ObservableProperty]
+        private OffrePro _selectedItem;
+        
         public List<string> type_offre { get; set; }
         public List<string> SecteurAct { get; set; }
 
@@ -42,11 +45,12 @@ namespace SaintMichel.ViewModel
 
         [ObservableProperty]
         private ObservableCollection<OffrePro> _obsItems; // Les items à afficher dans le ListView
-
+         
         OffrePro_API _API;
 
         public OffreProPageViewModel(OffrePro_API api)
         {
+        
             _API = api;
             ObsItems = new ObservableCollection<OffrePro>(); // Initialisation de la collection Observable
             OnAppearing();
@@ -62,6 +66,7 @@ namespace SaintMichel.ViewModel
                 "Aucun filtre pour secteur d'activité","Agriculture", "Sylviculture", "Pêche", "Industrie manufacturière", "Énergie et gestion de l'eau", "Construction", "Commerce", "Transports et entreposage", "Hébergement et restauration", "Information et communication", "Activités financières et assurance", "Activités immobilières", "Activités scientifiques et techniques", "Activités de services administratifs et de soutien", "Administration publique et défense", "Éducation", "Santé humaine et action sociale", "Arts", "Spectacles et activités récréatives", "Autres activités de services"
             };
             SelectedSecteurAct = "Aucun filtre pour secteur d'activité";
+
         }
 
         // Méthode pour charger les éléments depuis l'API
@@ -87,17 +92,21 @@ namespace SaintMichel.ViewModel
             }
             catch (Exception ex)
             {
+                ObsItems.Clear();
                 Console.WriteLine($"Erreur: {ex.Message}"); // Afficher les erreurs dans la console
                 await Application.Current.MainPage.DisplayAlert("Erreur", "Une erreur est survenue.", "OK");
             }
             finally
             {
+                
                 IsBusy = false;
             }
         }
+
+        [RelayCommand]
         async void FilterOffresBySecteurAct()
         {
-
+            
             await LoadItems();
 
             if (SelectedSecteurAct != "Aucun filtre pour secteur d'activité" && SelectedTypeOffre != "Aucun filtre pour type d'offre")
@@ -150,9 +159,12 @@ namespace SaintMichel.ViewModel
 
 
         }
+
+        [RelayCommand]
+
         async void FilterOffresByTypeOffre()
         {
-
+            
             await LoadItems();
             if (SelectedSecteurAct != "Aucun filtre pour secteur d'activité" && SelectedTypeOffre != "Aucun filtre pour type d'offre")
             {
@@ -160,12 +172,13 @@ namespace SaintMichel.ViewModel
                 var filteredItems = ObsItems.Where(o => o.TypeOffre == SelectedTypeOffre && o.SecteurActivite == SelectedSecteurAct).ToList();
 
 
-                // Vider la collection observable et ajouter les éléments filtrés
+                // Vider la collection observable et ajouter les éléments filtrés 
                 ObsItems.Clear();
                 foreach (var itemm in filteredItems)
                 {
                     ObsItems.Add(itemm);
                 }
+                //h
             }
             // Si aucun secteur n'est sélectionné, afficher toutes les offres
             else if (SelectedSecteurAct != "Aucun filtre pour secteur d'activité" && SelectedTypeOffre == "Aucun filtre pour type d'offre")
@@ -203,14 +216,16 @@ namespace SaintMichel.ViewModel
         }
 
         [RelayCommand]
-        async void offreTapped(OffrePro itemm)
+        async Task EventSelected()
         {
-            //if (IsBusy) return;
-            //IsBusy = true;
-            //OffrePro_API param1Value = new OffrePro_API();
-            //await Shell.Current.GoToAsync($"OffreProDetailPage?param1={param1Value}");
-            //IsBusy = false;
-
+            if (SelectedItem == null)
+            {
+                return;
+                
+            }
+            await Shell.Current.GoToAsync($"{nameof(OffreProDetailPage)}?{nameof(OffreProDetailPageViewModel.IDInterim)}={SelectedItem.IDInterim}");
         }
+
+
     }
 }

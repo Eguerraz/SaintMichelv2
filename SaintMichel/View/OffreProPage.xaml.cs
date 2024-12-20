@@ -11,5 +11,7 @@ namespace SaintMichel
             // BindingContext est automatiquement injecté via DI
             BindingContext = viewModel;
         }
+
+
     }
 }

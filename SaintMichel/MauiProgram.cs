@@ -30,6 +30,7 @@ namespace SaintMichel
             builder.Services.AddSingleton<OffreProPageViewModel>(); // ViewModel OffrePro
             builder.Services.AddTransient<EventPageViewModel>(); // ViewModel Event
             builder.Services.AddTransient<EventPage>(); // View Event
+            builder.Services.AddSingleton<OffreProDetailPageViewModel>(); // ViewModel OffrePro
 
 
 
